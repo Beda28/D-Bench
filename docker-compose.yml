@@ -1,0 +1,46 @@
+services:
+  frontend-builder:
+    build:
+      context: ./D-Front
+      dockerfile: Dockerfile
+    volumes:
+      - frontend-dist:/shared-dist
+    networks:
+      - d-bench-network
+    restart: "no"
+
+  backend:
+    build:
+      context: ./D-Back
+      dockerfile: Dockerfile
+    expose:
+      - "8000"
+    networks:
+      - d-bench-network
+    restart: unless-stopped
+
+  nginx:
+    build:
+      context: ./D-Nginx
+      dockerfile: Dockerfile
+    depends_on:
+      frontend-builder:
+        condition: service_completed_successfully
+      backend:
+        condition: service_started
+    ports:
+      - "80:80"
+    volumes:
+      - frontend-dist:/usr/share/nginx/html:ro
+    networks:
+      - d-bench-network
+    restart: unless-stopped
+
+volumes:
+  frontend-dist:
+    name: d-bench-frontend-dist
+
+networks:
+  d-bench-network:
+    name: d-bench-network
+    driver: bridge

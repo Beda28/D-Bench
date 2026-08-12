@@ -22,6 +22,10 @@ D-Bench/
 ├── D-Nginx/              # 프런트 정적 파일 서빙 및 API 프록시
 │   ├── Dockerfile
 │   └── nginx.conf
+├── D-MySQL/              # MySQL 데이터베이스 및 초기화 설정
+│   ├── Dockerfile
+│   └── init.sql
+├── .env.example          # 환경변수 작성 예시
 ├── docker-compose.yml    # 전체 컨테이너, 볼륨, 네트워크 구성
 └── README.md
 ```
@@ -65,4 +69,24 @@ docker compose down
 - `frontend-builder`: React 앱을 빌드해 `frontend-dist` 볼륨에 결과물을 복사한 후 종료합니다.
 - `nginx`: `frontend-dist` 볼륨을 읽기 전용으로 공유받아 정적 파일을 제공합니다.
 - `backend`: Flask 앱을 8000번 포트로 실행합니다.
-- 세 서비스는 `d-bench-network` 브리지 네트워크에 연결됩니다.
+- `database`: Compose가 `.env` 값을 주입하고 MySQL이 데이터베이스와 애플리케이션 사용자를 생성합니다.
+- 프런트, Nginx, 백엔드는 `d-bench-network`에 연결됩니다.
+- 백엔드와 MySQL은 `d-bench-db-network`에 연결됩니다.
+- MySQL 데이터는 `d-bench-mysql-data` 볼륨에 보관됩니다.
+
+### MySQL 환경변수
+
+루트 `.env` 파일에서 다음 값을 관리합니다.
+
+```dotenv
+MYSQL_ROOT_PASSWORD=d_bench_root_password
+MYSQL_DATABASE=d_bench
+MYSQL_USER=d_bench_user
+MYSQL_PASSWORD=d_bench_password
+```
+
+실제 배포 전에는 비밀번호를 반드시 변경해야 합니다. `.env`는 Git에서 제외되며 `.env.example`만 저장소에 포함됩니다.
+
+MySQL 공식 이미지가 `MYSQL_DATABASE`, `MYSQL_USER`, `MYSQL_PASSWORD`를 사용해 데이터베이스와 사용자 및 권한을 생성합니다. `init.sql`은 생성된 데이터베이스를 선택하고 이후 추가될 테이블 초기화를 담당합니다.
+
+MySQL 초기화는 데이터 볼륨이 비어 있을 때만 실행됩니다. 환경변수를 바꾸고 데이터베이스를 처음부터 다시 초기화해야 한다면 개발 데이터 삭제 여부를 확인한 후 `docker compose down -v`를 사용합니다.

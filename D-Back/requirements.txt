@@ -1,1 +1,2 @@
-Flask>=3.1,<4.0
+fastapi>=0.116,<1.0
+uvicorn[standard]>=0.35,<1.0

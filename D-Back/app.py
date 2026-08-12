@@ -1,13 +1,9 @@
-from flask import Flask
+from fastapi import FastAPI
 
 
-app = Flask(__name__)
+app = FastAPI()
 
 
 @app.get("/")
-def hello_world() -> str:
-    return "Hello, World!"
-
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000)
+def hello_world():
+    return {"message": "Hello, World!"}

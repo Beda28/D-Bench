@@ -14,7 +14,7 @@ D-Bench/
 │   │   └── main.tsx
 │   ├── package.json
 │   └── vite.config.ts
-├── D-Back/               # Python Flask 백엔드
+├── D-Back/               # Python FastAPI 백엔드
 │   ├── app.py            # 서버 실행 진입점
 │   ├── Dockerfile
 │   ├── requirements.txt  # Python 의존성
@@ -39,10 +39,10 @@ cd D-Back
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
-python app.py
+uvicorn app:app --host 0.0.0.0 --port 8000
 ```
 
-서버 실행 후 브라우저에서 `http://127.0.0.1:8000`에 접속하면 `Hello, World!`가 표시됩니다.
+서버 실행 후 브라우저에서 `http://127.0.0.1:8000`에 접속하면 `{"message":"Hello, World!"}`가 표시됩니다.
 
 가상환경을 종료하려면 `deactivate`를 실행합니다.
 
@@ -68,7 +68,7 @@ docker compose down
 
 - `frontend-builder`: React 앱을 빌드해 `frontend-dist` 볼륨에 결과물을 복사한 후 종료합니다.
 - `nginx`: `frontend-dist` 볼륨을 읽기 전용으로 공유받아 정적 파일을 제공합니다.
-- `backend`: Flask 앱을 8000번 포트로 실행합니다.
+- `backend`: FastAPI 앱을 Uvicorn으로 8000번 포트에서 실행합니다.
 - `database`: Compose가 `.env` 값을 주입하고 MySQL이 데이터베이스와 애플리케이션 사용자를 생성합니다.
 - 프런트, Nginx, 백엔드는 `d-bench-network`에 연결됩니다.
 - 백엔드와 MySQL은 `d-bench-db-network`에 연결됩니다.

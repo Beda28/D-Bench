@@ -9,10 +9,10 @@ import AppPage from './pages/app'
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<MainPage />} />
+      <Route path="/"       element={<MainPage />} />
       <Route path="/signin" element={<SigninPage />} />
       <Route path="/signup" element={<SignupPage />} />
-      <Route path="/app" element={<AppPage />} />
+      <Route path="/app"    element={<AppPage />} />
     </Routes>
   </BrowserRouter>
 )

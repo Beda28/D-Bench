@@ -1,7 +1,7 @@
 export type CurrentUser = { name: string; isGuest: boolean }
 type Account = { id: string; password: string }
 
-const ACCOUNTS_KEY = 'd-bench-accounts'
+const ACCOUNTS_KEY     = 'd-bench-accounts'
 const CURRENT_USER_KEY = 'd-bench-current-user'
 
 const getAccounts = (): Account[] => JSON.parse(localStorage.getItem(ACCOUNTS_KEY) ?? '[]')

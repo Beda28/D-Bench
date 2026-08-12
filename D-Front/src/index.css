@@ -1,0 +1,44 @@
+:root {
+  --color-bg: #1e1f22;
+  --color-surface: #2b2d31;
+  --color-surface-soft: #313338;
+  --color-text: #f2f3f5;
+  --color-text-muted: #b5bac1;
+  --color-border: #3f4147;
+  --color-primary: #5865f2;
+  --color-primary-hover: #4752c4;
+  --color-primary-soft: #3c438c;
+  --color-focus: #8b95f7;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: Inter, Pretendard, "Noto Sans KR", system-ui, sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-primary);
+}
+
+button:hover {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+
+button:focus-visible {
+  outline-color: var(--color-focus);
+}

@@ -16,6 +16,10 @@ D-Bench/
 │   └── vite.config.ts
 ├── D-Back/               # Python FastAPI 백엔드
 │   ├── app.py            # 서버 실행 진입점
+│   ├── controller/       # 요청 처리 로직
+│   ├── db/               # 데이터베이스 연결
+│   ├── repository/       # 데이터베이스 쿼리 작성 위치
+│   ├── router/           # API 경로 등록
 │   ├── Dockerfile
 │   ├── requirements.txt  # Python 의존성
 │   └── .gitignore
@@ -39,10 +43,10 @@ cd D-Back
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
-uvicorn app:app --host 0.0.0.0 --port 8000
+python app.py
 ```
 
-서버 실행 후 브라우저에서 `http://127.0.0.1:8000`에 접속하면 `{"message":"Hello, World!"}`가 표시됩니다.
+현재 등록된 예시 경로는 `GET /login`입니다.
 
 가상환경을 종료하려면 `deactivate`를 실행합니다.
 

@@ -1,15 +1,15 @@
-import fastapi
+from fastapi import APIRouter, Depends
 
-from controller import auth as controller
-from db         import connection
-from schema     import auth as schema
+from controller.auth import login as login_user, signup as signup_user
+from db.connection import get_db
+from schema.auth import User
 
-router = fastapi.APIRouter()
+router = APIRouter()
 
 @router.post("/login")
-def login(user: schema.User, db = fastapi.Depends(connection.get_db)):
-    return controller.login(user, db)
+def login(user: User, db = Depends(get_db)):
+    return login_user(user, db)
 
 @router.post("/signup")
-def signup(user: schema.User, db = fastapi.Depends(connection.get_db)):
-    return controller.signup(user, db)
+def signup(user: User, db = Depends(get_db)):
+    return signup_user(user, db)

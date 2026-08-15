@@ -27,6 +27,12 @@ services:
     networks:
       - d-bench-network
       - d-bench-db-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://127.0.0.1:8000/docs')"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     restart: unless-stopped
 
   database:
@@ -60,7 +66,7 @@ services:
       frontend-builder:
         condition: service_completed_successfully
       backend:
-        condition: service_started
+        condition: service_healthy
     ports:
       - "80:80"
     volumes:

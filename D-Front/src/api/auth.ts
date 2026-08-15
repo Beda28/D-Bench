@@ -1,6 +1,6 @@
 import api from './client'
 
-type AuthResponse = { message: string }
+type AuthResponse = { message: string; token: string }
 type AuthResult   = AuthResponse | string
 
 export const login = (id: string, pw: string) =>

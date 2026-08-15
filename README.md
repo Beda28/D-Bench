@@ -9,7 +9,7 @@ D-Bench/
 ├── D-Front/              # React + TypeScript + Vite 프런트엔드
 │   ├── src/
 │   │   ├── pages/        # 시작, 인증, 앱 화면
-│   │   ├── auth.ts       # 임시 브라우저 인증 로직
+│   │   ├── auth.ts       # 브라우저 세션 관리
 │   │   ├── index.css
 │   │   └── main.tsx
 │   ├── package.json
@@ -43,10 +43,11 @@ cd D-Back
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
+$env:JWT_SECRET="로컬_개발용_랜덤값"
 python app.py
 ```
 
-현재 등록된 예시 경로는 `GET /login`입니다.
+현재 인증 경로는 `POST /login`, `POST /signup`입니다.
 
 가상환경을 종료하려면 `deactivate`를 실행합니다.
 
@@ -78,7 +79,7 @@ docker compose down
 - 백엔드와 MySQL은 `d-bench-db-network`에 연결됩니다.
 - MySQL 데이터는 `d-bench-mysql-data` 볼륨에 보관됩니다.
 
-### MySQL 환경변수
+### 환경변수
 
 루트 `.env` 파일에서 다음 값을 관리합니다.
 
@@ -87,9 +88,12 @@ MYSQL_ROOT_PASSWORD=d_bench_root_password
 MYSQL_DATABASE=d_bench
 MYSQL_USER=d_bench_user
 MYSQL_PASSWORD=d_bench_password
+JWT_SECRET=새로운_랜덤_비밀값
 ```
 
-실제 배포 전에는 비밀번호를 반드시 변경해야 합니다. `.env`는 Git에서 제외되며 `.env.example`만 저장소에 포함됩니다.
+실제 배포 전에는 비밀번호와 `JWT_SECRET`을 반드시 변경해야 합니다. `.env`는 Git에서 제외되며 `.env.example`만 저장소에 포함됩니다.
+
+`JWT_SECRET`은 로그인과 회원가입 때 반환하는 JWT의 서명에 사용됩니다. JWT payload에는 사용자 `uuid`와 `id`가 포함됩니다.
 
 MySQL 공식 이미지가 `MYSQL_DATABASE`, `MYSQL_USER`, `MYSQL_PASSWORD`를 사용해 데이터베이스와 사용자 및 권한을 생성합니다. `init.sql`은 생성된 데이터베이스를 선택하고 이후 추가될 테이블 초기화를 담당합니다.
 

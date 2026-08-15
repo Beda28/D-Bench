@@ -53,7 +53,7 @@ const AppPage = () => {
 
                     <UserInfo>
                         <strong>{user.name}</strong>
-                        <span>{user.isGuest ? '게스트' : '온라인'}</span>
+                        <span>온라인</span>
                     </UserInfo>
 
                     <ProfileAction title="로그아웃" onClick={handleSignOut}>
@@ -83,13 +83,6 @@ const AppPage = () => {
 
                     <EmptyTitle>아직은 조용하네요</EmptyTitle>
                     <EmptyText>친구를 추가하면 이곳에서 온라인 상태를 확인하고 대화를 시작할 수 있어요.</EmptyText>
-
-                    {user.isGuest && (
-                        <GuestBanner>
-                            <strong>게스트 모드</strong>
-                            <span>로그아웃하면 현재 게스트 정보가 모두 삭제됩니다.</span>
-                        </GuestBanner>
-                    )}
                 </FriendsContent>
             </Content>
         </AppShell>
@@ -446,23 +439,6 @@ const EmptyText = styled.p`
     max-width: 480px;
     color: var(--color-text-muted);
     line-height: 1.6;
-`
-
-const GuestBanner = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    margin-top: 28px;
-    padding: 12px 18px;
-    background: #5865f21f;
-    color: var(--color-text-muted);
-    border: 1px solid #5865f266;
-    border-radius: 8px;
-    font-size: 13px;
-
-    strong {
-        color: #aeb5ff;
-    }
 `
 
 export default AppPage

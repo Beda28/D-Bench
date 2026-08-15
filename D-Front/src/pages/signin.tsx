@@ -16,7 +16,7 @@ const SigninPage = () => {
 
         if (typeof response === 'string') return setError(response)
 
-        startUserSession(id.trim())
+        startUserSession(id.trim(), response.token)
         window.alert(response.message)
         navigate('/app')
     }
@@ -49,7 +49,6 @@ const SigninPage = () => {
                 <BottomText>
                     계정이 필요한가요? <Link to="/signup">회원가입</Link>
                 </BottomText>
-                <HomeLink to="/">게스트로 시작하기</HomeLink>
             </Panel>
         </Page>
     )
@@ -127,13 +126,6 @@ const BottomText = styled.p`
         color: #00a8fc;
         text-decoration: none;
     }
-`
-
-const HomeLink = styled(Link)`
-    color: var(--color-text-muted);
-    font-size: 13px;
-    text-align: center;
-    text-decoration: none;
 `
 
 export default SigninPage

@@ -18,7 +18,7 @@ const SignupPage = () => {
         const response = await signup(id, password)
         if (typeof response === 'string') return setError(response)
 
-        startUserSession(id.trim())
+        startUserSession(id.trim(), response.token)
         window.alert(response.message)
         navigate('/app')
     }

@@ -6,6 +6,6 @@ Base = declarative_base()
 class User(Base):
     __tablename__ = "user"
 
-    id   = Column(String(10),  primary_key=True)
-    uuid = Column(String(36),  nullable=False, unique=True)
+    uuid = Column(String(36),  primary_key=True)
+    id   = Column(String(10),  nullable=False, index=True)
     pw   = Column(String(255), nullable=False)

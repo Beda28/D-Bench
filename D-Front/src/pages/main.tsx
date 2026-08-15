@@ -1,21 +1,7 @@
-import { useState }          from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import styled                from 'styled-components'
-import { startGuestSession } from '../auth'
+import { Link } from 'react-router-dom'
+import styled    from 'styled-components'
 
 const MainPage = () => {
-    const navigate = useNavigate()
-
-    const [guestName, setGuestName] = useState('')
-    const [error,     setError]     = useState('')
-
-    const handleStartAsGuest = () => {
-        const name = guestName.trim()
-        if (!name) return setError('사용할 이름을 입력해 주세요.')
-        startGuestSession(name)
-        navigate('/app')
-    }
-
     return (
         <Landing>
             <Navigation>
@@ -40,27 +26,16 @@ const MainPage = () => {
                     </Headline>
                     <Intro>
                         서버를 만들고, 친구를 만나고, 편안하게 이야기를 시작하세요.
-                        계정 없이도 바로 둘러볼 수 있습니다.
+                        계정을 만들면 어디서든 대화를 이어갈 수 있습니다.
                     </Intro>
                 </Copy>
 
-                <GuestPanel>
-                    <PanelTitle>게스트로 바로 시작</PanelTitle>
-                    <PanelText>표시할 이름 하나만 입력하면 됩니다.</PanelText>
-
-                    <GuestInput
-                        type="text"
-                        maxLength={20}
-                        placeholder="이름 입력"
-                        value={guestName}
-                        onChange={(event) => setGuestName(event.target.value)}
-                    />
-
-                    {error && <Error role="alert">{error}</Error>}
-
-                    <GuestButton onClick={handleStartAsGuest}>게스트로 시작하기</GuestButton>
-                    <Notice>게스트로 로그인하면 로그아웃 시 정보가 모두 삭제됩니다.</Notice>
-                </GuestPanel>
+                <AccountPanel>
+                    <PanelTitle>D-Bench 시작하기</PanelTitle>
+                    <PanelText>계정에 로그인하거나 새 계정을 만들어 주세요.</PanelText>
+                    <AccountLink to="/signin">로그인</AccountLink>
+                    <SignupButton to="/signup">회원가입</SignupButton>
+                </AccountPanel>
             </Hero>
 
             <Glow />
@@ -162,7 +137,7 @@ const Intro = styled.p`
     line-height: 1.7;
 `
 
-const GuestPanel = styled.div`
+const AccountPanel = styled.div`
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -183,38 +158,19 @@ const PanelText = styled.p`
     color: var(--color-text-muted);
 `
 
-const GuestInput = styled.input`
-    width: 100%;
+const AccountLink = styled(Link)`
     padding: 14px;
-    background: var(--color-bg);
-    color: var(--color-text);
-    border: 1px solid var(--color-border);
+    background: var(--color-primary);
+    color: white;
     border-radius: 7px;
-    outline: none;
-
-    &:focus {
-        border-color: var(--color-focus);
-    }
-`
-
-const GuestButton = styled.button`
-    padding: 14px;
-    border: 0;
-    border-radius: 7px;
-    cursor: pointer;
     font-weight: 700;
-`
-
-const Notice = styled.p`
-    color: #aeb1b7;
-    font-size: 12px;
-    line-height: 1.5;
     text-align: center;
+    text-decoration: none;
 `
 
-const Error = styled.p`
-    color: #fa777c;
-    font-size: 13px;
+const SignupButton = styled(AccountLink)`
+    background: var(--color-text);
+    color: var(--color-bg);
 `
 
 const Glow = styled.div`
